@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+  "name": "Ubuntu",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {
+      "extraNixConfig": "extra-experimental-features = nix-command flakes"
+    },
+    "ghcr.io/dmytrokyrychuk/dev-container-features/shell-history:0.0.4": {},
+    "ghcr.io/christophermacgown/devcontainer-features/direnv:1": {},
+  },
+  "onCreateCommand": {
+    "update packages": "sudo apt-get update",
+  },
+  "postCreateCommand": {
+    "install bash-completion": "sudo apt-get install -y bash-completion",
+    "configure direnv": "bash .devcontainer/scripts/configure-direnv.sh",
+    "install nixd": "nix-env -iA nixpkgs.nixd",
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "jnoortheen.nix-ide"
+      ]
+    }
+  },
+}
